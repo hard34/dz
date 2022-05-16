@@ -33,7 +33,7 @@ int main() {
     }
 
     set_difference(s1.begin(), s1.end(), s0.begin(), s0.end(), inserter(res, res.begin()));
-    cout << "цифры, которые встречаются в двузначных числах, но не встречаются в трехзначных:" << endl;
+    cout << "All digits that are in two-digit numbers, but do not occur in three-digit:" << endl;
     for (set<int>::iterator it = res.begin(); it != res.end(); it++)
         cout << *it << " ";
     system("pause");
