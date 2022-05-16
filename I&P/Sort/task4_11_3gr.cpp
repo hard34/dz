@@ -3,7 +3,7 @@
 #include <iomanip>
 using namespace std;
 
-ifstream in("input.txt");
+ifstream in("input_task4.txt");
 ofstream out("output.txt");
 
 void sort(int* a, int n)
@@ -54,10 +54,8 @@ int main(void)
     for (i = 0; i < n; ++i)
         for (j = 0; j < m; ++j)
             cin >> a[i][j];
-    //сортируем
     sort(a);
 
-    //выводим
     cout << n << "\t" << m << "\n";
     for (i = 0; i < n; i++)
     {
