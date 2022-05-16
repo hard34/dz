@@ -1,99 +1,97 @@
-//Создать двусвязный список, содержащий целые числа. Удалить лишние элементы так, чтобы каждый элемент был не меньше среднего арифметического всех
-//элементов, следующих за ним.
 #include<iostream>
 using namespace std;
 
-struct list { // структура списка
-	int inf; // значение
-	list* next; // следующий элемент
-	list* prev; // предыдущий элемент
+struct list {
+	int inf; 
+	list* next; 
+	list* prev; 
 };
 
-void push(list*& h, list*& t, int x) { // функция вставки элемента в конец
-	list* r = new list; // создаем новый элемент
-	r->inf = x; // присваеваем значение
-	r->next = NULL; // всегда последний
-	if (!h && !t) { // если список пуст
-		r->prev = NULL; // первый элемент
-		h = r; // голова
+void push(list*& h, list*& t, int x) { 
+	list* r = new list; 
+	r->inf = x; 
+	r->next = NULL; 
+	if (!h && !t) { 
+		r->prev = NULL;
+		h = r; 
 	}
 	else {
-		t->next = r; // r - следующий для хвоста
-		r->prev = t; // хвост - предыдущий для r
+		t->next = r; 
+		r->prev = t; 
 	}
-	t = r; // r теперь хвост
+	t = r; 
 }
 
-void print(list* h, list* t) { // функция печати элементов списка
-	list* p = h; // указатель на голову
-	cout << "Новый лист: ";
-	while (p) { // пока не дошли до конца списка
-		cout << p->inf << " "; // печать очередного элемента
-		p = p->next; // переход к следующему элементу
+void print(list* h, list* t) { 
+	list* p = h; 
+	cout << "New line: ";
+	while (p) { 
+		cout << p->inf << " "; 
+		p = p->next; 
 	}
 }
 
-void deleteNode(list*& h, list*& t, list* r) { // функция удаления элемента после r
-	if (r == h && r == t) // если единственный элемент списка
+void deleteNode(list*& h, list*& t, list* r) { 
+	if (r == h && r == t) 
 		h = t = NULL;
-	else if (r == h) { // если удаляем голову списка
-		h = h->next; // сдвигаем голову
+	else if (r == h) { 
+		h = h->next; 
 		h->prev = NULL;
 	}
-	else if (r == t) { // если удаляем хвост списка
-		t = t->prev; // сдвигаем хвост
+	else if (r == t) { 
+		t = t->prev; 
 		t->next = NULL;
 	}
-	else {  // Если это не голова и не хвост и не единственный элемент
-		r->next->prev = r->prev; // для следующего от r предыдущим становится r->prev
-		r->prev->next = r->next; // для прелущего от r следующим становится r->next
+	else {  
+		r->next->prev = r->prev; 
+		r->prev->next = r->next; 
 	}
-	delete r; // удаляем r
+	delete r; 
 }
 
-double average(list* t) { // функция посчета средне арифмитического значения
-	list* ptr = t->prev; // переход к следующему элементу
-	double sum = 0, n = 0; // объявление переменной
-	while (ptr) { // пока 
-		sum += ptr ->inf; // прибавление значений
-		n++; // увеличение колличества
-		ptr = ptr->prev; // переход к следующему элементу
+double average(list* t) { 
+	list* ptr = t->prev; 
+	double sum = 0, n = 0; 
+	while (ptr) { 
+		sum += ptr ->inf; 
+		n++; 
+		ptr = ptr->prev; 
 	}
-	double mean = sum / n; // вычисление средне арифметического значения
+	double mean = sum / n; 
 	return mean;
 }
 
-list* find(list* h, list* t, int x) { // функция поиска элемента в списке
-	list* p = h; // указатель на голову
-	while (p) { // пока не дошли до конца списка
-		if (p->inf == x) break; // если нашли, прекращаем цикл
-		p = p->next; // переход к следующему элементу
+list* find(list* h, list* t, int x) { 
+	list* p = h; 
+	while (p) { 
+		if (p->inf == x) break; 
+		p = p->next; 
 	}
-	return p; // возвращаем указатель на элемент
+	return p; 
 }
 
 int main() {
-	setlocale(LC_ALL, "RUS"); // подключение русской клавиатуры 
-	list* head = NULL, * tail = NULL; // объявление переменных
-	int n, temp = 0, w = 0; // объявление переменных
-	cout << "Кол-во элементов: ";
-	cin >> n; // ввод размера списка
-	for (int i = 0; i < n; i++) { // проход всего списка
-		cout << "Элемент [" << i << "] = ";
-		cin >> temp; // ввод очередного элемента
-		push(head, tail, temp); // добавление в конец
+	setlocale(LC_ALL, "RUS"); 
+	list* head = NULL, * tail = NULL; 
+	int n, temp = 0, w = 0; 
+	cout << "Number of elements: ";
+	cin >> n; 
+	for (int i = 0; i < n; i++) { 
+		cout << "Element [" << i << "] = ";
+		cin >> temp; 
+		push(head, tail, temp);
 	}
-	list* tr = tail; // объявление переменной
-	while (tr) { // до конца списка
-		if (tr->inf < average(tr)) { // если элемент меньше чем средне арифметическое 
-			deleteNode(head, tail, tr); // удалить его
-			tr = tail; // присваиваем новую голову
+	list* tr = tail; 
+	while (tr) { 
+		if (tr->inf < average(tr)) { 
+			deleteNode(head, tail, tr);
+			tr = tail; 
 		}
-		else { // иначе 
-			tr = tr->prev; // переходим к следующему элемента
-			w++; // увеличиваем счетчик 
+		else { 
+			tr = tr->prev; 
+			w++; 
 		}
 	}
-	print(head, tail); // вывод списка на экран
-	return 0; // возвращение переменной
+	print(head, tail); 
+	return 0;
 }
