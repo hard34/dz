@@ -1,4 +1,3 @@
-//3 номер задания
 # include <iostream>
 # include <fstream>
 # include <cstdio>
@@ -9,10 +8,10 @@
 
 using namespace std;
 
-ifstream in("input.txt");//Открыть для ввода
-ofstream out("output.txt");//Открыть для вывода
+ifstream in("input.txt");
+ofstream out("output.txt");
 
-vector<vector<int>> create()// Ф-я для считывания матрицы
+vector<vector<int>> create()
 {
 	int n;
 	string count;
@@ -32,36 +31,30 @@ vector<vector<int>> create()// Ф-я для считывания матрицы
 	return matrix;
 }
 
-//функция сортировки (поразрядная сортировка)
+
 vector <int> LSDsort(vector <int> a) {
 	int ms = 10;
-	int maxras = 0, k = 1;//разряд максимального числа, разряд, который мы сравниваем на i-том шаге
-	int n = a.size(); // количество сотрудников
-	//нахождение максимального числа
+	int maxras = 0, k = 1;
+	int n = a.size();   
 	for (int i = 0; i < n; i++) {
 		maxras = max(maxras, a[i]);
 	}
-	maxras = log10(maxras) + 1; // считаем количество разрядов
-	// сортируем столько раз, сколько разрядов в самом большом числе
+	maxras = log10(maxras) + 1;       
 	for (int q = 1; q <= maxras; q++) {
-		int temp = 0;//присвоение зачения 
-		vector <int> mas(ms);//массив для хранения количества чисел, с одинаковыми цифрами в разрядах
-		vector <vector <int> > dop_mas(n); // двумерный массив, в котором будут записаны частично отсортированные сотрудники
+		int temp = 0;  
+		vector <int> mas(ms);      
+		vector <vector <int> > dop_mas(n);        
 		for (int i = 0; i < n; i++) {
 			dop_mas[i].resize(ms);
 		}
 
 		for (int i = 0; i < n; i++) {
-			//определяем остаток текущего разряда
-			int x = a[i] / k % 10;
-			//записываем в позицию mas[x] сотрудника, отстаток i-ого разряда которого равен x
-			dop_mas[mas[x]][x] = a[i];
-			//увеличиваем позицию на единицу
+			int x = a[i] / k % 10;    
+			dop_mas[mas[x]][x] = a[i];  
 			mas[x] += 1;
 		}
 		for (int i = 0; i < ms; i++) {
-			for (int j = 0; j < mas[i]; j++) {
-				//ставим элементы на свои места
+			for (int j = 0; j < mas[i]; j++) {   
 				a[temp] = dop_mas[j][i];
 				temp += 1;
 			}
@@ -71,13 +64,13 @@ vector <int> LSDsort(vector <int> a) {
 	return a;
 }
 
-vector<vector<int>> transp(vector<vector<int>> matrix) {//функция для транспонирования матрицы
+vector<vector<int>> transp(vector<vector<int>> matrix) {   
 	for (int i = 0; i < matrix.size(); i++) {
 		for (int j = 0; j < matrix.size(); j++) {
 			if ((matrix[i][j] != matrix[j][i]) && j >= i) {
-				matrix[i][j] = matrix[i][j] xor matrix[j][i];//меняет местами
-				matrix[j][i] = matrix[i][j] xor matrix[j][i];//меняет местами
-				matrix[i][j] = matrix[i][j] xor matrix[j][i];//меняет местами
+				matrix[i][j] = matrix[i][j] xor matrix[j][i]; 
+				matrix[j][i] = matrix[i][j] xor matrix[j][i]; 
+				matrix[i][j] = matrix[i][j] xor matrix[j][i]; 
 			}
 		}
 
@@ -87,7 +80,7 @@ vector<vector<int>> transp(vector<vector<int>> matrix) {//функция для транспонир
 
 
 int main() {
-	setlocale(LC_ALL, "RUS");//использование русской клавиатуры
+	setlocale(LC_ALL, "RUS");  
 	vector<vector <int>> numbers = create();
 	int i = 0;
 	numbers = transp(numbers);
@@ -98,12 +91,12 @@ int main() {
 
 
 	numbers = transp(numbers);
-	for (int i = 0; i < numbers.size(); i++) {//вывод массива
+	for (int i = 0; i < numbers.size(); i++) {
 		for (int j = 0; j < numbers.size(); j++) {
 			cout << numbers[i][j] << ' ';
 		}
 		cout << "\n";
 	}
-	system("pause");//системная пауза 
+	system("pause");  
 
 }
