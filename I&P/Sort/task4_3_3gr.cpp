@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ifstream in("input.txt");
+ifstream in("input_task4.txt");
 ofstream out("output.txt");
 
 vector<vector<int>> create()
