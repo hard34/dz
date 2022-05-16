@@ -12,7 +12,7 @@ int main() {
 	string num = "1234567890";
 	string s, number;
 	map<string, int> a;
-	ifstream in("input.txt");
+	ifstream in("input_task2_15.txt");
 	while (getline(in, s)) { //Cчитывание строки из файла.
 		while (!empty(s)) {
 			if (s[0] == ' ')
