@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 	ifstream input;
-	input.open("input.txt");
+	input.open("input_task2_7.txt");
 	int k = 0, n = 0;
 	string s;
 	set <string> strs;
